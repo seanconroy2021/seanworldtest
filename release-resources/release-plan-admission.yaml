@@ -1,0 +1,43 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: ReleasePlanAdmission
+metadata:
+  labels:
+    release.appstudio.openshift.io/auto-release: "true"
+  name: rhtap-service-push-rpa
+  namespace: managed-release-team-tenant
+spec:
+  applications:
+    - seanworld
+  origin: dev-release-team-tenant
+  pipeline:
+    pipelineRef:
+      params:
+        - name: url
+          value: https://github.com/happybhati/release-service-catalog.git
+        - name: revision
+          value: kfluxbugs-1182 
+        - name: pathInRepo
+          value: pipelines/rhtap-service-push/rhtap-service-push.yaml
+      resolver: "git"
+    serviceAccountName: release-service-account
+  policy: rhtap-service-push-policy
+  data:
+    infra-deployment-update-script: |
+      sed -i -e \
+      's|\(https://github.com/redhat-appstudio/release-service/config/default?ref=\)\(.*\)|\1{{ revision }}|' \
+      -e 's/\(newTag: \).*/\1{{ revision }}/' components/release/development/kustomization.yaml
+      sed -i -e \
+      's|\(https://github.com/redhat-appstudio/release-service/config/grafana/?ref=\)\(.*\)|\1{{ revision }}|' \
+      -e 's//\1{{ revision }}/' components/monitoring/grafana/base/dashboards/release/kustomization.yaml
+    targetGHRepo: seanconroy2021/infra-deployments
+    githubAppID: 880106
+    githubAppInstallationID: 49762101
+    pyxis:
+      server: stage
+      secret: pyxis
+    images:
+      addGitShaTag: true
+    mapping:
+      components:
+        - name: rhtap-service-push-component
+          repository: quay.io/lmendes/push-to-external-registry

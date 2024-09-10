@@ -1,0 +1,25 @@
+﻿apiVersion: appstudio.redhat.com/v1alpha1
+kind: Component
+metadata:
+  name: rhtap-service-push-component
+  annotations:
+    pipelinesascode: '1'
+    image.redhat.com/generate: 'true'
+spec:
+  application: seanworld
+  componentName: rhtap-service-push-component
+  replicas: 1
+  resources:
+    requests:
+      cpu: 10m
+      memory: 50Mi
+  source:
+    git:
+      context: ./
+      devfileUrl: >-
+        https://raw.githubusercontent.com/seanconroy2021/seanworldtest/main/devfile-sample-python/devfile.yaml
+      dockerfileUrl: >-
+        https://raw.githubusercontent.com/seanconroy2021/seanworldtest/main/devfile-sample-python/docker/Dockerfile
+      url: 'https://github.com/seanconroy2021/seanworldtest/tree/main/devfile-sample-python'
+  targetPort: 8081
+
