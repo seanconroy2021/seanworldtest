@@ -2,7 +2,7 @@ apiVersion: appstudio.redhat.com/v1alpha1
 kind: EnterpriseContractPolicy
 metadata:
   name: rhtap-service-push-policy
-  namespace: managed-release-team-tenant
+  namespace: managed-release-team-tenant1
 spec:
   description: >-
     Includes rules for levels 1, 2 & 3 of SLSA v0.1.

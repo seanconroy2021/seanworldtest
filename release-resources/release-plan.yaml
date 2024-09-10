@@ -7,4 +7,4 @@ metadata:
   name: rhtap-service-push-rp
 spec:
   application: seanworld
-  target: managed-release-team-tenant
+  target: managed-release-team-tenant1

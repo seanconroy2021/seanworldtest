@@ -4,11 +4,11 @@ metadata:
   labels:
     release.appstudio.openshift.io/auto-release: "true"
   name: rhtap-service-push-rpa
-  namespace: managed-release-team-tenant
+  namespace: managed-release-team-tenant1
 spec:
   applications:
     - seanworld
-  origin: dev-release-team-tenant
+  origin: dev-release-team-tenant1
   pipeline:
     pipelineRef:
       params:
@@ -30,8 +30,8 @@ spec:
       's|\(https://github.com/redhat-appstudio/release-service/config/grafana/?ref=\)\(.*\)|\1{{ revision }}|' \
       -e 's//\1{{ revision }}/' components/monitoring/grafana/base/dashboards/release/kustomization.yaml
     targetGHRepo: seanconroy2021/infra-deployments
-    githubAppID: 880106
-    githubAppInstallationID: 49762101
+    githubAppID: 937959
+    githubAppInstallationID: 52516361
     pyxis:
       server: stage
       secret: pyxis
@@ -40,4 +40,4 @@ spec:
     mapping:
       components:
         - name: rhtap-service-push-component
-          repository: quay.io/lmendes/push-to-external-registry
+          repository: quay.io/sconroykonflux/test-images 
