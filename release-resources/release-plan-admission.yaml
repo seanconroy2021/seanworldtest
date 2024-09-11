@@ -13,30 +13,18 @@ spec:
     pipelineRef:
       params:
         - name: url
-          value: https://github.com/happybhati/release-service-catalog.git
+          value: https://github.com/seanconroy2021/release-service-catalog.git
         - name: revision
-          value: kfluxbugs-1182 
+          value: development 
         - name: pathInRepo
-          value: pipelines/rhtap-service-push/rhtap-service-push.yaml
+          value: pipelines/release-to-github/release-to-github.yaml
       resolver: "git"
     serviceAccountName: release-service-account
   policy: rhtap-service-push-policy
   data:
-    infra-deployment-update-script: |
-      sed -i -e \
-      's|\(https://github.com/redhat-appstudio/release-service/config/default?ref=\)\(.*\)|\1{{ revision }}|' \
-      -e 's/\(newTag: \).*/\1{{ revision }}/' components/release/development/kustomization.yaml
-      sed -i -e \
-      's|\(https://github.com/redhat-appstudio/release-service/config/grafana/?ref=\)\(.*\)|\1{{ revision }}|' \
-      -e 's//\1{{ revision }}/' components/monitoring/grafana/base/dashboards/release/kustomization.yaml
     targetGHRepo: seanconroy2021/infra-deployments
     githubAppID: 937959
     githubAppInstallationID: 52516361
-    pyxis:
-      server: stage
-      secret: pyxis
-    images:
-      addGitShaTag: true
     mapping:
       components:
         - name: rhtap-service-push-component
